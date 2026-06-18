@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  --background: #120A07;
+  --foreground: #F7F5F0;
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: #C89B5E;
+  --color-accent-hover: #B3874B;
+  --color-primary: #1E120D;
+  --color-beige: #F7F5F0;
+  --color-beige-dark: #EFECE6;
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #120A07;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E120D;
+  border: 1px solid #C89B5E/20;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C89B5E;
+}
+
+/* Selection colors */
+::selection {
+  background: #C89B5E;
+  color: #1E120D;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom gold gradient borders and text highlights */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFF 30%, #C89B5E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-wood-gradient {
+  background: linear-gradient(180deg, #1E120D 0%, #120A07 100%);
+}
+
+.border-gold-glow {
+  box-shadow: 0 0 15px rgba(200, 155, 94, 0.15);
+}
+
+/* Micro-animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 4s infinite ease-in-out;
+}
