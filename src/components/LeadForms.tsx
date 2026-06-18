@@ -39,6 +39,8 @@ export function ContactForm() {
 
   const [errors, setErrors] = useState<Partial<LeadFormValues>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const validate = () => {
     const newErrors: Partial<LeadFormValues> = {};
@@ -55,11 +57,28 @@ export function ContactForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Full Lead Submitted:", form); // Safe text logging
-      setIsSubmitted(true);
+      setIsSubmitting(true);
+      setSubmitError("");
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setIsSubmitted(true);
+        } else {
+          setSubmitError(data.error || "Failed to submit request.");
+        }
+      } catch (err) {
+        setSubmitError("Network connection error. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -225,11 +244,13 @@ export function ContactForm() {
         />
       </div>
 
+      {submitError && <p className="text-red-400 text-xs text-center">{submitError}</p>}
       <button
         type="submit"
-        className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-3 text-sm font-sans font-semibold rounded tracking-widest uppercase transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl"
+        disabled={isSubmitting}
+        className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-3 text-sm font-sans font-semibold rounded tracking-widest uppercase transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl disabled:opacity-50"
       >
-        Submit Design Inquiry
+        {isSubmitting ? "Submitting..." : "Submit Design Inquiry"}
       </button>
     </form>
   );
@@ -243,6 +264,7 @@ export function FreeConsultationPopup() {
   const [location, setLocation] = useState("Bangalore");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     // 20-second delay
@@ -262,7 +284,7 @@ export function FreeConsultationPopup() {
     sessionStorage.setItem("consultation_popup_dismissed", "true");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) {
       setError("Please fill in all fields");
@@ -273,8 +295,34 @@ export function FreeConsultationPopup() {
       return;
     }
     setError("");
-    console.log("Popup Consultation Lead:", { name, phone, location });
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          email: "",
+          city: location,
+          propertyType: "Free Consultation Popup",
+          projectSize: "",
+          budgetRange: "",
+          startDate: "Immediate",
+          message: "Enquiry submitted via 20-second Delayed Consultation Popup.",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        setError(data.error || "Failed to log consultation request.");
+      }
+    } catch (err) {
+      setError("Network connection error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -372,9 +420,10 @@ export function FreeConsultationPopup() {
 
                     <button
                       type="submit"
-                      className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-3 text-sm font-sans font-semibold rounded tracking-wider uppercase transition-colors duration-300 cursor-pointer"
+                      disabled={isSubmitting}
+                      className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-3 text-sm font-sans font-semibold rounded tracking-wider uppercase transition-colors duration-300 cursor-pointer disabled:opacity-50"
                     >
-                      Secure Free Session
+                      {isSubmitting ? "Securing..." : "Secure Free Session"}
                     </button>
                   </form>
                 </>
@@ -409,6 +458,7 @@ export function ExitIntentPopup() {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
@@ -432,7 +482,7 @@ export function ExitIntentPopup() {
     setIsOpen(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) {
       setError("Name and Phone are required");
@@ -443,8 +493,34 @@ export function ExitIntentPopup() {
       return;
     }
     setError("");
-    console.log("Exit Intent Lead:", { name, phone, email });
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          city: "Bangalore",
+          propertyType: "Exit Intent Popup",
+          projectSize: "",
+          budgetRange: "",
+          startDate: "Immediate",
+          message: "Requesting luxury catalogue & Free Pooja Unit voucher.",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        setError(data.error || "Failed to submit request.");
+      }
+    } catch (err) {
+      setError("Network connection error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -508,9 +584,10 @@ export function ExitIntentPopup() {
 
                     <button
                       type="submit"
-                      className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-2.5 text-xs font-sans font-semibold rounded tracking-wider uppercase transition-colors cursor-pointer"
+                      disabled={isSubmitting}
+                      className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-2.5 text-xs font-sans font-semibold rounded tracking-wider uppercase transition-colors cursor-pointer disabled:opacity-50"
                     >
-                      Get Catalogue & Offer
+                      {isSubmitting ? "Securing..." : "Get Catalogue & Offer"}
                     </button>
                   </form>
                 </>
@@ -553,6 +630,8 @@ export function QuoteRequestModal() {
   });
   const [errors, setErrors] = useState<Partial<LeadFormValues>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     openQuoteModalGlobal = () => {
@@ -585,11 +664,28 @@ export function QuoteRequestModal() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Modal Quote Request:", form);
-      setIsSubmitted(true);
+      setIsSubmitting(true);
+      setSubmitError("");
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setIsSubmitted(true);
+        } else {
+          setSubmitError(data.error || "Failed to submit request.");
+        }
+      } catch (err) {
+        setSubmitError("Network connection error. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -742,11 +838,13 @@ export function QuoteRequestModal() {
                       </div>
                     </div>
 
+                    {submitError && <p className="text-red-400 text-xs text-center">{submitError}</p>}
                     <button
                       type="submit"
-                      className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-3 text-xs font-sans font-semibold rounded tracking-wider uppercase transition-colors duration-300 mt-2 cursor-pointer"
+                      disabled={isSubmitting}
+                      className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-3 text-xs font-sans font-semibold rounded tracking-wider uppercase transition-colors duration-300 mt-2 cursor-pointer disabled:opacity-50"
                     >
-                      Submit Quote Request
+                      {isSubmitting ? "Submitting..." : "Submit Quote Request"}
                     </button>
                   </form>
                 </>

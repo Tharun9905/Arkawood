@@ -17,6 +17,7 @@ export default function CostCalculator() {
   const [city, setCity] = useState("Bangalore");
   const [error, setError] = useState("");
   const [isCalculated, setIsCalculated] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Options Definitions
   const propertyOptions = [
@@ -92,7 +93,7 @@ export default function CostCalculator() {
     }
   };
 
-  const handleSubmitLead = (e: React.FormEvent) => {
+  const handleSubmitLead = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) {
       setError("Name and mobile number are required");
@@ -103,8 +104,34 @@ export default function CostCalculator() {
       return;
     }
     setError("");
-    console.log("Calculator Lead Saved:", { name, phone, email, city, property, finish, scope });
-    setIsCalculated(true);
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          city,
+          propertyType: property,
+          projectSize: "",
+          budgetRange: finish,
+          startDate: "Immediate",
+          message: `Calculated estimate for ${property} with ${finish} finish level and ${scope} scope.`,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsCalculated(true);
+      } else {
+        setError(data.error || "Failed to log estimate details");
+      }
+    } catch (err) {
+      setError("Network connection error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const restartCalculator = () => {
@@ -330,9 +357,10 @@ export default function CostCalculator() {
 
                   <button
                     type="submit"
-                    className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-3 text-sm font-sans font-semibold rounded tracking-wider uppercase transition-colors cursor-pointer"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] py-3 text-sm font-sans font-semibold rounded tracking-wider uppercase transition-colors cursor-pointer disabled:opacity-50"
                   >
-                    View Cost Estimation
+                    {isSubmitting ? "Calculating..." : "View Cost Estimation"}
                   </button>
                 </form>
               </motion.div>
