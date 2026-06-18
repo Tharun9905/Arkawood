@@ -63,6 +63,15 @@ body {
   box-shadow: 0 0 15px rgba(200, 155, 94, 0.15);
 }
 
+/* Hide scrollbar utility for mobile touch lists */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 /* Micro-animations */
 @keyframes pulseGlow {
   0%, 100% {
