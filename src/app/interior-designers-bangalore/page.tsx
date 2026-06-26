@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Best Interior Designers in Bangalore | Arka WoodTech Interiors",
-  description: "Top interior design company in Bangalore offering bespoke home interiors, modular kitchens, and wardrobes with 7+ years of expert craft.",
+  description: "Top interior design company in Bangalore offering bespoke home interiors, modular kitchens, and wardrobes with 10+ years of expert craft.",
 };
 
 export default function BangaloreInteriorsPage() {

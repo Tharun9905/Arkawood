@@ -44,13 +44,13 @@ export default function AboutPage() {
             </h2>
             <div className="w-12 h-0.5 bg-[#C89B5E]" />
             <p className="text-stone-300 text-xs md:text-sm leading-relaxed">
-              Arka WoodTech Interiors was founded to address a critical gap in the residential interior market: the disparity between beautiful 3D design plans and poorly executed physical carpenter installations. 
+              Arka WoodTech Interiors was founded to address a critical gap in the residential interior market: the disparity between beautiful 3D design plans and poorly executed physical carpenter installations.
             </p>
             <p className="text-stone-400 text-xs leading-relaxed">
-              With 7+ years of experience in furniture fabrication and space optimization, our founders established a state-of-the-art modular manufacturing plant in Bangalore. This plant leverages computerized CNC machinery to ensure zero structural misalignments, wood chipping, or raw-edge water leaks—problems that standard manual tools cannot solve.
+              With 10+ years of experience in furniture fabrication and space optimization, our founders established a state-of-the-art modular manufacturing plant in Bangalore. This plant leverages computerized CNC machinery to ensure zero structural misalignments, wood chipping, or raw-edge water leaks—problems that standard manual tools cannot solve.
             </p>
             <p className="text-stone-400 text-xs leading-relaxed">
-              Today, with over 50+ successful projects executed across Bangalore, Mysore, Bellary, Chitradurga, and Anantapur, we are recognized as a premier execution partner for villa and luxury apartment owners.
+              Today, with over 70+ successful projects executed across Bangalore, Mysore, Bellary, Chitradurga, and Anantapur, we are recognized as a premier execution partner for villa and luxury apartment owners.
             </p>
           </div>
 
@@ -61,7 +61,7 @@ export default function AboutPage() {
               className="rounded-xl border border-stone-850 object-cover h-[380px] w-full"
             />
             <div className="absolute -bottom-6 -left-6 bg-[#C89B5E] p-6 rounded-lg text-[#1E120D] hidden md:block">
-              <p className="text-3xl font-serif font-bold leading-none">50+</p>
+              <p className="text-3xl font-serif font-bold leading-none">70+</p>
               <p className="text-[10px] tracking-wider uppercase font-semibold mt-1">Homes Transformed</p>
             </div>
           </div>

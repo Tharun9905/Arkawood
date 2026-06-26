@@ -102,7 +102,7 @@ export default function HomePage() {
 
         <div className="relative max-w-7xl mx-auto px-4 md:px-8 z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            
+
             {/* Left Column: Text content & Actions */}
             <div className="lg:col-span-6 text-left space-y-6 md:space-y-8 flex flex-col items-start">
               {/* Subheader Badge */}
@@ -165,11 +165,11 @@ export default function HomePage() {
               >
                 <div className="flex items-center space-x-2 text-stone-400">
                   <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
-                  <span className="text-[11px] font-sans font-medium uppercase tracking-wider">7+ Years Exp</span>
+                  <span className="text-[11px] font-sans font-medium uppercase tracking-wider">10+ Years Exp</span>
                 </div>
                 <div className="flex items-center space-x-2 text-stone-400">
                   <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
-                  <span className="text-[11px] font-sans font-medium uppercase tracking-wider">50+ Happy Families</span>
+                  <span className="text-[11px] font-sans font-medium uppercase tracking-wider">70+ Happy Families</span>
                 </div>
                 <div className="flex items-center space-x-2 text-stone-400">
                   <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
@@ -221,11 +221,11 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             <div className="p-3 border-r border-stone-800 last:border-0">
-              <h3 className="text-3xl md:text-4xl font-serif text-[#C89B5E] font-bold">7+</h3>
+              <h3 className="text-3xl md:text-4xl font-serif text-[#C89B5E] font-bold">10+</h3>
               <p className="text-[10px] tracking-widest uppercase text-stone-400 font-sans mt-1">Years Experience</p>
             </div>
             <div className="p-3 border-r border-stone-800 last:border-0">
-              <h3 className="text-3xl md:text-4xl font-serif text-[#C89B5E] font-bold">50+</h3>
+              <h3 className="text-3xl md:text-4xl font-serif text-[#C89B5E] font-bold">70+</h3>
               <p className="text-[10px] tracking-widest uppercase text-stone-400 font-sans mt-1">Happy Families Served</p>
             </div>
             <div className="p-3 border-r border-stone-800 last:border-0">
@@ -252,7 +252,7 @@ export default function HomePage() {
             </h2>
             <div className="w-16 h-1 bg-[#C89B5E]" />
             <p className="text-stone-300 text-sm leading-relaxed font-sans">
-              Arka WoodTech Interiors brings over 7+ years of experience delivering premium customized home interior solutions. Combining artisan craftsmanship with high-capacity factory automation, we fabricate furniture layouts tailored to each client&apos;s routine.
+              Arka WoodTech Interiors brings over 10+ years of experience delivering premium customized home interior solutions. Combining artisan craftsmanship with high-capacity factory automation, we fabricate furniture layouts tailored to each client&apos;s routine.
             </p>
             <p className="text-stone-400 text-xs leading-relaxed font-sans">
               We specialize in space layout design, modular kitchen structures, closets, TV cabinets, and architectural panelling for apartments, villas, and premium custom residences across Karnataka and Andhra Pradesh.
@@ -684,8 +684,8 @@ export default function HomePage() {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`px-4.5 py-1.5 text-xs rounded-full cursor-pointer transition-all duration-300 uppercase tracking-wider font-semibold font-sans ${activeCategory === cat
-                  ? "bg-[#C89B5E] text-[#1E120D] border border-[#C89B5E]"
-                  : "bg-stone-900 text-stone-300 hover:text-white border border-stone-850 hover:bg-stone-855"
+                ? "bg-[#C89B5E] text-[#1E120D] border border-[#C89B5E]"
+                : "bg-stone-900 text-stone-300 hover:text-white border border-stone-850 hover:bg-stone-855"
                 }`}
             >
               {cat}

@@ -26,7 +26,7 @@ const sansFont = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "ARKA WOODTECH INTERIORS | Premium Home Interiors & Modular Kitchens Bangalore",
   description:
-    "Premium interior design company in Bangalore offering modular kitchens, wardrobes, living room interiors and complete home solutions with 7+ years experience.",
+    "Premium interior design company in Bangalore offering modular kitchens, wardrobes, living room interiors and complete home solutions with 10+ years experience.",
   keywords: [
     "Interior Designers Bangalore",
     "Modular Kitchen Bangalore",
