@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Check,
@@ -43,6 +43,17 @@ import {
 } from "@/data/arkaData";
 
 export default function HomePage() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch((err) => {
+        console.log("Autoplay blocked or failed:", err);
+      });
+    }
+  }, []);
+
   // Gallery states
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
@@ -78,92 +89,130 @@ export default function HomePage() {
   return (
     <div className="overflow-hidden bg-[#120A07]">
       {/* SECTION 1 – HERO */}
-      <section className="relative min-h-[92vh] flex items-center justify-center bg-stone-950 pt-10">
+      <section className="relative min-h-[92vh] flex items-center justify-center bg-[#120A07] pt-24 pb-16 overflow-hidden">
         {/* Luxury dark wood backdrop overlay */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25 pointer-events-none"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.07] pointer-events-none"
           style={{
             backgroundImage: `url('https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?auto=format&fit=crop&w=1920&q=80')`,
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#120A07] via-transparent to-black/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(200,155,94,0.06),transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#120A07] via-transparent to-black/40 pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 md:px-8 text-center z-10 space-y-6 md:space-y-8 py-12">
-          {/* Subheader Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center space-x-1.5 bg-[#C89B5E]/10 border border-[#C89B5E]/30 px-3.5 py-1.5 rounded-full text-xs md:text-sm font-sans tracking-widest text-[#C89B5E] uppercase font-semibold"
-          >
-            <span>Precision • Passion • Perfection</span>
-          </motion.div>
+        <div className="relative max-w-7xl mx-auto px-4 md:px-8 z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            
+            {/* Left Column: Text content & Actions */}
+            <div className="lg:col-span-6 text-left space-y-6 md:space-y-8 flex flex-col items-start">
+              {/* Subheader Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center space-x-1.5 bg-[#C89B5E]/10 border border-[#C89B5E]/30 px-3.5 py-1.5 rounded-full text-xs font-sans tracking-widest text-[#C89B5E] uppercase font-semibold"
+              >
+                <span>Precision • Passion • Perfection</span>
+              </motion.div>
 
-          {/* Main Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-serif tracking-tight leading-tight text-white max-w-5xl mx-auto"
-          >
-            Transform Your Space Into A <span className="text-gold-gradient italic">Masterpiece</span>
-          </motion.h1>
+              {/* Main Title */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif tracking-tight leading-tight text-white"
+              >
+                Transform Your Space Into A <span className="text-[#C89B5E] italic">Masterpiece</span>
+              </motion.h1>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-stone-300 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed font-sans"
-          >
-            Custom Interior Design, Modular Kitchens, Wardrobes & Complete Home Solutions Crafted With German Precision Machinery & Flawless Finishing.
-          </motion.p>
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-stone-300 text-sm sm:text-base leading-relaxed font-sans max-w-xl"
+              >
+                Custom Interior Design, Modular Kitchens, Wardrobes & Complete Home Solutions Crafted With German Precision Machinery & Flawless Finishing.
+              </motion.p>
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
-          >
-            <button
-              onClick={triggerQuoteModal}
-              className="w-full sm:w-auto bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] text-xs font-sans font-bold uppercase tracking-widest px-8 py-4 rounded transition-all duration-300 cursor-pointer shadow-lg border border-[#C89B5E]"
-            >
-              Get Free Consultation
-            </button>
-            <Link
-              href="/projects"
-              className="w-full sm:w-auto border border-stone-700 hover:border-white text-stone-300 hover:text-white text-xs font-sans font-bold uppercase tracking-widest px-8 py-4 rounded transition-colors"
-            >
-              View Projects
-            </Link>
-          </motion.div>
+              {/* CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="flex flex-col sm:flex-row items-center gap-4 pt-2 w-full sm:w-auto"
+              >
+                <button
+                  onClick={triggerQuoteModal}
+                  className="w-full sm:w-auto bg-[#C89B5E] hover:bg-[#B3874B] text-[#1E120D] text-xs font-sans font-bold uppercase tracking-widest px-8 py-4 rounded transition-all duration-300 cursor-pointer shadow-lg border border-[#C89B5E] text-center"
+                >
+                  Get Free Consultation
+                </button>
+                <Link
+                  href="/projects"
+                  className="w-full sm:w-auto border border-stone-700 hover:border-white text-stone-300 hover:text-white text-xs font-sans font-bold uppercase tracking-widest px-8 py-4 rounded transition-colors text-center"
+                >
+                  View Projects
+                </Link>
+              </motion.div>
 
-          {/* Micro badges inline */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 border-t border-stone-900/60"
-          >
-            <div className="flex items-center justify-center space-x-2 text-stone-400">
-              <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
-              <span className="text-xs font-sans font-medium uppercase tracking-wider">7+ Years Exp</span>
+              {/* Micro badges inline */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="grid grid-cols-2 gap-4 w-full pt-6 border-t border-stone-900/60"
+              >
+                <div className="flex items-center space-x-2 text-stone-400">
+                  <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
+                  <span className="text-[11px] font-sans font-medium uppercase tracking-wider">7+ Years Exp</span>
+                </div>
+                <div className="flex items-center space-x-2 text-stone-400">
+                  <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
+                  <span className="text-[11px] font-sans font-medium uppercase tracking-wider">50+ Happy Families</span>
+                </div>
+                <div className="flex items-center space-x-2 text-stone-400">
+                  <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
+                  <span className="text-[11px] font-sans font-medium uppercase tracking-wider">In-House Carpenters</span>
+                </div>
+                <div className="flex items-center space-x-2 text-stone-400">
+                  <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
+                  <span className="text-[11px] font-sans font-medium uppercase tracking-wider">Advanced CNC Fab</span>
+                </div>
+              </motion.div>
             </div>
-            <div className="flex items-center justify-center space-x-2 text-stone-400">
-              <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
-              <span className="text-xs font-sans font-medium uppercase tracking-wider">50+ Happy Families</span>
+
+            {/* Right Column: Premium Showroom Video Player */}
+            <div className="lg:col-span-6 w-full flex justify-center mt-6 lg:mt-0 relative">
+              {/* Outer soft gold glow highlight */}
+              <div className="absolute inset-0 bg-[#C89B5E]/5 blur-3xl rounded-full scale-75 -z-10" />
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="relative w-full aspect-video rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-stone-800 bg-stone-950 group"
+              >
+                {/* Gold thin border overlay */}
+                <div className="absolute inset-0 border border-[#C89B5E]/15 rounded-xl pointer-events-none group-hover:border-[#C89B5E]/30 transition-colors duration-500 z-20" />
+
+                <video
+                  ref={videoRef}
+                  src="/Build_a_PREMIUM_LUXURY_HIGH_.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover z-10 relative"
+                  poster="https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?auto=format&fit=crop&w=1920&q=80"
+                />
+
+                {/* Subtle vignette layer */}
+                <div className="absolute inset-0 bg-black/10 pointer-events-none z-20" />
+              </motion.div>
             </div>
-            <div className="flex items-center justify-center space-x-2 text-stone-400">
-              <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
-              <span className="text-xs font-sans font-medium uppercase tracking-wider">In-House Carpenters</span>
-            </div>
-            <div className="flex items-center justify-center space-x-2 text-stone-400">
-              <Check className="w-4 h-4 text-[#C89B5E] flex-shrink-0" />
-              <span className="text-xs font-sans font-medium uppercase tracking-wider">Advanced CNC Fab</span>
-            </div>
-          </motion.div>
+
+          </div>
         </div>
       </section>
 
@@ -634,11 +683,10 @@ export default function HomePage() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4.5 py-1.5 text-xs rounded-full cursor-pointer transition-all duration-300 uppercase tracking-wider font-semibold font-sans ${
-                activeCategory === cat
+              className={`px-4.5 py-1.5 text-xs rounded-full cursor-pointer transition-all duration-300 uppercase tracking-wider font-semibold font-sans ${activeCategory === cat
                   ? "bg-[#C89B5E] text-[#1E120D] border border-[#C89B5E]"
                   : "bg-stone-900 text-stone-300 hover:text-white border border-stone-850 hover:bg-stone-855"
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -812,9 +860,8 @@ export default function HomePage() {
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-[#C89B5E] transition-transform duration-300 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
+                      className={`w-5 h-5 text-[#C89B5E] transition-transform duration-300 ${isOpen ? "rotate-180" : ""
+                        }`}
                     />
                   </button>
                   <AnimatePresence initial={false}>
